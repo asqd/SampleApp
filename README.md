@@ -1,0 +1,1 @@
+Sample app by asqd using Ruby on Rails tutirial
