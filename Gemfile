@@ -20,6 +20,8 @@ group :test do
   gem 'cucumber-rails', '1.4.0', :require => false
   gem 'database_cleaner', github: 'bmabey/database_cleaner'
 end
+
+gem 'faker', '1.1.2'
 gem 'bcrypt-ruby', '3.1.2'
 gem "bootstrap-sass", '2.3.2.0'
 gem 'sass-rails', '4.0.2'
