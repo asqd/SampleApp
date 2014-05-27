@@ -3,6 +3,14 @@ require 'spec_helper'
 describe "AuthenticationPages" do
   subject { page }
 
+  describe "non-signed-in user" do
+    before { visit root_path }
+
+    it { should_not have_link('Profile') }
+    it { should_not have_link('Sign out') }
+    it { should_not have_link('Settings') }
+  end
+
   describe "signin page" do
     before { visit signin_path }
 
@@ -31,10 +39,10 @@ describe "AuthenticationPages" do
     before { valid_signin user }
 
     it { should have_title(user.name) }
-    it { should have_link('Users', href: users_path) } 
+    it { should have_link('Users', href: users_path) }
     it { should have_link('Profile', href: user_path(user)) }
     it { should have_link('Sign out', href: signout_path) }
-    it { should have_link('Settings'), href: edit_user_path(user) }
+    it { should have_link('Settings', href: edit_user_path(user)) }
     it { should_not have_link('Sign in', href: signin_path) }
 
     describe "followed by signout" do
@@ -53,15 +61,15 @@ describe "AuthenticationPages" do
           before { visit edit_user_path(user) }
           it { should have_title('Sign in') }
         end
-        
+
         describe "submitting to update action" do
           before { patch user_path(user) }
           specify { expect(response).to redirect_to(signin_path) }
         end
 
         describe "visiting the user index" do
-          before { visit users_path } 
-          it { should have_title('Sign in') } 
+          before { visit users_path }
+          it { should have_title('Sign in') }
         end
 
       end
@@ -99,14 +107,29 @@ describe "AuthenticationPages" do
             it "should render the desired protected page" do
               expect(page).to have_title('Edit user')
             end
+
+            describe "when signing in again" do
+              before do
+                click_link "Sign out"
+                visit signin_path                
+                fill_in "Email",    with: user.email
+                fill_in "Password", with: user.password
+                click_button "Sign in"
+              end
+
+              it "should render the default (profile) page" do
+                expect(page).to have_title(user.name)
+              end
+            end
+
           end
         end
       end
     end
 
     describe "as non-admin user" do
-      let(:user) { FactoryGirl.create(:user) } 
-      let(:non_admin) { FactoryGirl.create(:user) } 
+      let(:user) { FactoryGirl.create(:user) }
+      let(:non_admin) { FactoryGirl.create(:user) }
 
       before { valid_signin non_admin, no_capybara: true }
 
@@ -116,4 +139,4 @@ describe "AuthenticationPages" do
       end
     end
   end
-end 
+end
