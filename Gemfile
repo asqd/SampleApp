@@ -21,6 +21,7 @@ group :test do
   gem 'database_cleaner', github: 'bmabey/database_cleaner'
 end
 
+gem 'will_paginate', '3.0.4'
 gem 'faker', '1.1.2'
 gem 'bcrypt-ruby', '3.1.2'
 gem "bootstrap-sass", '2.3.2.0'
