@@ -14,7 +14,7 @@ class UsersController < ApplicationController
   def new
     if signed_in?
       redirect_to root_url
-      flash[:notify] = 'Please log-out before Signing-up!'
+      flash[:notice] = 'Please log-out before Signing-up!'
     else
       @user = User.new
     end
@@ -52,6 +52,7 @@ class UsersController < ApplicationController
       flash[:success] = "User deleted."
       redirect_to users_url
     else
+      flash[:notice] = "You can't delete Yourself!"
       redirect_to users_url
     end
   end
