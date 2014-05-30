@@ -1,8 +1,6 @@
 <% #provide(:title, 'Home') %>
-<div class="center hero-unit">
-	<h1>Sample App</h1>
-	<p>This is home page of the sample app and there is nothing here, but you can imagine any picture you want on this page (for example: cutie little kittens in bucket)</p>
-	<%= link_to "Sign up now!", signup_path, class: "btn btn-large btn-primary" %>
-</div>
-
-<%= link_to image_tag("rails.png", alt: "Rails"), 'http://rubyonrails.org/' %>
+<% if signed_in? %>
+	<%= render 'shared/home_for_user' %>	
+<% else %>
+ 	<%= render 'shared/default_home' %>
+<% end %>

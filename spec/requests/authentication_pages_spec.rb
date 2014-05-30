@@ -73,6 +73,19 @@ describe "AuthenticationPages" do
         end
 
       end
+
+      describe "in the Microposts controller" do
+
+        describe "sibmitting to create action" do
+          before { post microposts_path }
+          specify { expect(response).to redirect_to(signin_path) }
+        end
+
+        describe "submittin to the destroy action" do
+          before { delete micropost_path(FactoryGirl.create(:micropost)) }
+          specify { expect(response).to redirect_to(signin_path) }
+        end
+      end
     end
 
     describe "as wrong user" do
@@ -111,7 +124,7 @@ describe "AuthenticationPages" do
             describe "when signing in again" do
               before do
                 click_link "Sign out"
-                visit signin_path                
+                visit signin_path
                 fill_in "Email",    with: user.email
                 fill_in "Password", with: user.password
                 click_button "Sign in"

@@ -7,6 +7,7 @@ def valid_user
   fill_in "Confirmation",  with: "foobar"
 end
 
+
 def valid_signin(user, options={})
   if options[:no_capybara]
     #Sign in when not using Capybara
