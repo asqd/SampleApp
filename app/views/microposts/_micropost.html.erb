@@ -1,4 +1,5 @@
 <li>
 <span class="content"><%= micropost.content %></span>
 <span class="timestamp">Posetd <%= time_ago_in_words(micropost.created_at) %> ago</span>
+<%= render 'shared/delete_micropost', object: micropost %>
 </li>

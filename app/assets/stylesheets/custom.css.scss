@@ -206,7 +206,10 @@ input {
 .timestamp {
   color: $grayLight;
 }
-
+.gravatar {
+  float: left;
+  margin-right: 10px;
+}
 aside {
   textarea {
     height: 100px;
