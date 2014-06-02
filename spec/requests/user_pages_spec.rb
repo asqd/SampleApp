@@ -6,9 +6,7 @@ describe "UserPages" do
   describe "index" do
     let(:user) { FactoryGirl.create(:user) }
     before(:each) do
-      valid_signin FactoryGirl.create(:user)
-      #FactoryGirl.create(:user, name: "Bob", email: "bob@example.com")
-      #FactoryGirl.create(:user, name: "Sarah", email: "sarah@example.com")
+      valid_signin FactoryGirl.create(:user)      
       visit users_path
     end
 
@@ -26,6 +24,21 @@ describe "UserPages" do
           expect(page).to have_selector('li', text: user.name)
         end
       end
+    end
+
+    describe "delete microposts to current user only" do
+      
+      let(:other_user) { FactoryGirl.create(:user) }
+      let!(:other_micropost) { FactoryGirl.create(:micropost, user: other_user) }
+
+      before do
+        visit user_path(other_user)
+      end
+
+      describe "no delete links" do
+        it { should_not have_link('delete') } 
+      end
+
     end
 
     describe "delete links" do
@@ -100,9 +113,9 @@ describe "UserPages" do
     it { should have_content(user.name) }
     it { should have_title(user.name) }
 
-    describe "micropost" do
-      it { should have_content('First!') } 
-      it { should have_content('Second!') }
+    describe "microposts" do
+      it { should have_content(m1.content) } 
+      it { should have_content(m2.content) }
       it { should have_content(user.microposts.count) }  
     end
   end
