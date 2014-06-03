@@ -1,3 +1,4 @@
+<section>
 <%= link_to gravatar_for(current_user, size: 52), current_user %>
 <h1>
 	<%= current_user.name %>
@@ -8,3 +9,4 @@
 <span>
 	<%= pluralize(current_user.microposts.count, "micropost") %>
 </span>
+</section>
